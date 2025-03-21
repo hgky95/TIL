@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@RunWith(SpringRunner.class) // deprecated in favor of @ExtendWith(SpringExtension.class) in JUnit 5
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTest {
@@ -25,12 +25,12 @@ public class UserControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Before // deprecated in favor of @BeforeEach in JUnit 5
+    @Before
     public void setup() {
         userRepository.deleteAll();
     }
 
-    @Test // deprecated in favor of @Test from org.junit.jupiter.api.Test
+    @Test
     public void testCreateUser() throws Exception {
         String userJson = "{\"username\":\"testuser\",\"email\":\"test@example.com\"}";
 
