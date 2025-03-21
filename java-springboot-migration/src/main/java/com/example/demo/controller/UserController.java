@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,9 @@ public class UserController {
 
     @Autowired // @Autowired on fields is deprecated in favor of constructor injection in Spring Boot 3
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     // using deprecated @RequestMapping instead of @GetMapping
     @RequestMapping(method = RequestMethod.GET)
@@ -33,6 +37,13 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
         User user = userRepository.findById(id).orElse(null);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+    }
+
+    // New endpoint using cached service
+    @GetMapping("/username")
+    public ResponseEntity<User> getUserByUsername(@RequestParam String username) {
+        User user = userService.findByUsername(username);
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
